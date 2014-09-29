@@ -11,10 +11,15 @@ thmpp = '60'
 sort = '1d'
 
 fileLayout = [category, sort, purity]
+## http://alpha.wallhaven.cc/wallpaper/search?categories=111&purity=100&sorting=random&order=desc
+## http://alpha.wallhaven.cc/wallpaper/search?categories=111&purity=100&sorting=random&order=desc&page=6
 
 def buildUrl():
-     return 'http://wallbase.cc/%s/%s?section=wallpapers&q=&res_opt=%s&res=%s&thpp=%s&purity=%s&board=%s&aspect=%s&ts=%s' % \
-        (category, pageNum, res_opt, res, thmpp, purity, board, aspect, sort)
+    return 'http://alpha.wallhaven.cc/wallpaper/search?categories=111&purity=100&sorting=random&order=desc&page=1'
+
+
+    '''return 'http://wallbase.cc/%s/%s?section=wallpapers&q=&res_opt=%s&res=%s&thpp=%s&purity=%s&board=%s&aspect=%s&ts=%s' % \
+        (category, pageNum, res_opt, res, thmpp, purity, board, aspect, sort)'''
     
 def updateUrl(pageNum=0):
 

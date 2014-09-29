@@ -10,7 +10,8 @@ class decryptLinksThread(threading.Thread):
         threading.Thread.__init__(self)
         self.in_queue = in_queue
         self.out_queue = out_queue
-        self.pattern = r'<img src="(.*)" class="wall stage1 wide">'
+        #self.pattern = r'<img src="(.*)" class="wall stage1 wide">'
+        self.pattern = r'\s*<img id="wallpaper"\s*src="(.*)"'
 
     def run(self):
         while True:

@@ -11,8 +11,12 @@ class subLinkThread(threading.Thread):
         threading.Thread.__init__(self)
         self.site_queue = site_queue
         self.sublink_queue = sublink_queue
-        self.wallsite = 'http://wallbase.cc/wallpaper/'
-        self.pattern = r'http://wallbase.cc/wallpaper/(\d*)'
+        #self.wallsite = 'http://wallbase.cc/wallpaper/'
+        #self.pattern = r'http://wallbase.cc/wallpaper/(\d*)'
+
+        self.wallsite = 'http://alpha.wallhaven.cc/wallpaper/'
+        #self.pattern = r'http://alpha.wallhaven.cc/wallpaper/(\d*)'
+        self.pattern = r'<a class="preview" href="http://alpha.wallhaven.cc/wallpaper/(\d*)"'
         self.sub_pattern = r'<img src="(.*)" class="wall stage1 wide">'
 
     def run(self):

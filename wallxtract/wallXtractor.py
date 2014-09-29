@@ -5,7 +5,7 @@ from termcolor import colored
 from download.download_sublink import subLinkThread
 from download.download_img import wallpaperThread
 
-from parser.decrypt_sublink import decryptLinksThread
+from wallxtract.parser.decrypt_sublink import decryptLinksThread
 
 from log.logger import loggerThread
 from counter.counter import CounterThread
@@ -20,7 +20,7 @@ class RunProgram():
 
     """
     def __init__(self):
-        self.size = 10
+        self.size = 1
 
         self.site_queue = Queue.Queue()
         self.sublinks_queue = Queue.Queue()

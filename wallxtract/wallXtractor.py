@@ -1,5 +1,8 @@
 import Queue
 import time
+import logging
+import requests
+import sys
 from termcolor import colored
 
 from download.download_sublink import subLinkThread
@@ -14,6 +17,9 @@ from wallxtract.wallbase_config import buildUrl
 from wallxtract.wallbase_config import updateUrl
 from wallxtract.wallbase_config import returnThmpp
 
+
+from common.logger import LoggerTool
+logging = LoggerTool().setupLogger(__name__, level=logging.DEBUG)
 
 class RunProgram():
     """
@@ -50,26 +56,36 @@ class RunProgram():
 
         countList = [CounterThread(self.count_queue) for x in range(self.size)]
         
-        print "Begin counting"
+        logging.debug("Begin counting")
         for c in countList:
             c.setDaemon(True)
             c.start()
 
         self.site_queue.join()
-        print "Site_queue joined"
+        logging.debug("Site_queue joined")
         self.sublinks_queue.join()
-        print "Sublinks_queue joined"
+        logging.debug("Sublinks_queue joined")
         self.decryptedLinks_queue.join()
-        print "decryptedLinks_queue joined"
+        logging.debug("decryptedLinks_queue joined")
         self.log_queue.join()
-        print "log_queue joined"
+        logging.debug("log_queue joined")
         self.count_queue.join()
-        print "count_queue joined"
+        logging.debug("count_queue joined")
 
         self.added_imgs, self.skipped_imgs = self.getCount(countList)
 
+    def exists(self, path):
+
+        r = requests.head(path)
+        return r.status_code == requests.codes.ok
+
     def single_page(self):
         site = buildUrl()
+        if not self.exists(site):
+            logging.fatal("Unable to access the site, please check the url")
+            sys.exit(0)
+
+
         start = time.time()
         self.site_queue.put(site)        
         self.runThreads()

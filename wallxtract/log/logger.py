@@ -2,6 +2,10 @@ import threading
 from wallxtract.path_config import returnLogPath
 from termcolor import cprint
 
+import logging
+from wallxtract.common.logger import LoggerTool
+logger = LoggerTool().setupLogger(__name__, level=logging.DEBUG)
+
 class loggerThread(threading.Thread):
     """Log the downloaded Wallpaper"""
 
@@ -13,7 +17,7 @@ class loggerThread(threading.Thread):
     def run(self):
         while True:
             try:
-                print "Trying to Log"
+                logger.debug("Trying to Log")
                 print_colored_green = lambda x: cprint(x, 'green')
                 entry = self.log_queue.get()
                 log = open(self.logpath, 'a+' ) 
@@ -22,4 +26,4 @@ class loggerThread(threading.Thread):
                 print_colored_green("Logged: " + entry)
                 self.log_queue.task_done()
             except:
-                print "Error in the logger"
+                logger.error("Error in the logger")

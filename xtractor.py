@@ -10,6 +10,9 @@ import os
 #sys.path.append(path)
 
 import wallxtract
+import logging
+from wallxtract.common.logger import LoggerTool
+log= LoggerTool().setupLogger(__name__, level=logging.DEBUG)
 
 def main():
     try:
@@ -18,7 +21,7 @@ def main():
         #wallbaseExtractor.multi_page()
 
     except KeyboardInterrupt:
-       print "Exiting program!"
+       logging.debug("Exiting program!")
        sys.exit()
 if __name__ == '__main__':
     main()

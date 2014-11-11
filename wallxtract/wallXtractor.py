@@ -1,24 +1,24 @@
-import Queue
+import queue as Queue
 import time
 import logging
 import requests
 import sys
 from termcolor import colored
 
-from download.download_sublink import subLinkThread
-from download.download_img import wallpaperThread
+from .download.download_sublink import subLinkThread
+from .download.download_img import wallpaperThread
 
 from wallxtract.parser.decrypt_sublink import decryptLinksThread
 
-from log.logger import loggerThread
-from counter.counter import CounterThread
+from .log.logger import loggerThread
+from .counter.counter import CounterThread
 
 from wallxtract.wallbase_config import buildUrl
 from wallxtract.wallbase_config import updateUrl
 from wallxtract.wallbase_config import returnThmpp
 
 
-from common.logger import LoggerTool
+from wallxtract.common.logger import LoggerTool
 logging = LoggerTool().setupLogger(__name__, level=logging.DEBUG)
 
 class RunProgram():
@@ -119,6 +119,6 @@ class RunProgram():
 
         print_colored_magenta = lambda x: colored(x, 'magenta')
         print_colored_cyan = lambda x: colored(x, 'cyan')
-        print "You have downloaded:", print_colored_magenta(self.added_imgs), "new images to your directory and skipped:", print_colored_magenta(self.skipped_imgs), "images"
-        print print_colored_cyan('It took:'), print_colored_magenta(time), print_colored_cyan('seconds')
+        print("You have downloaded:", print_colored_magenta(self.added_imgs), "new images to your directory and skipped:", print_colored_magenta(self.skipped_imgs), "images")
+        print_colored_cyan('It took:'), print_colored_magenta(time), print_colored_cyan('seconds')
 

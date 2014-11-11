@@ -2,10 +2,14 @@ import os
 import re
 import threading
 import requests
+import logging
 from wallxtract.path_config import returnPath
 from wallxtract.path_config import returnLogPath
 from wallxtract.wallbase_config import returnFileLayout
 from termcolor import colored
+
+from wallxtract.common.logger import LoggerTool
+log = LoggerTool().setupLogger(__name__, level=logging.DEBUG)
 
 class wallpaperThread(threading.Thread):
     """
@@ -44,7 +48,7 @@ class wallpaperThread(threading.Thread):
     def run(self):
         while True:
             try:
-                print "Trying to download image"
+                log.debug("Trying to download image")
                 link = self.decryptedLinks_queue.get()
                 response = requests.get(link)
                 
@@ -63,7 +67,7 @@ class wallpaperThread(threading.Thread):
                 self.decryptedLinks_queue.task_done()
                 
             except:
-                print "There was an error in the image"
+                log.debug("There was an error in the image")
 
     def save_content(self, resp, filename):
             save = open(self.path + filename , 'wb')
@@ -73,5 +77,5 @@ class wallpaperThread(threading.Thread):
     def printMsg(self, link, filename):
             print_colored_cyan = lambda x: colored(x, 'cyan')
             print_colored_magenta = lambda x: colored(x, 'magenta')
-            print print_colored_cyan("Downloading: " + link), "\n\t->", print_colored_magenta(self.path + filename) + "\n"
+            print_colored_cyan("Downloading: " + link), "\n\t->", print_colored_magenta(self.path + filename) + "\n"
   

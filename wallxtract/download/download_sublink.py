@@ -2,7 +2,12 @@ import re
 import sys
 import threading
 import requests
+import logging
 from termcolor import cprint
+
+from wallxtract.common.logger import LoggerTool
+log = LoggerTool().setupLogger(__name__, level=logging.DEBUG)
+
 
 class subLinkThread(threading.Thread):
     """Grab Sublinks"""
@@ -22,7 +27,7 @@ class subLinkThread(threading.Thread):
     def run(self):
         while True:     
             try:
-                print "Getting Site..."
+                log.debug("Getting Site...")
                 site = self.site_queue.get()
                 r = requests.get(site)
                 match = re.findall ( self.pattern, r.text)

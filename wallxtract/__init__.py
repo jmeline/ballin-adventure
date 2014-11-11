@@ -3,7 +3,7 @@
 from .counter.counter import CounterThread
 
 from .download.download_img import wallpaperThread
-from .download.download_sublink import subLinkThread
+from .download.download_sublink import SubLinkThread
 
 from .log.logger import loggerThread
 

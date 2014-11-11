@@ -41,16 +41,18 @@ class wallpaperThread(threading.Thread):
                 f = f.rstrip()
                 if filename == f:
                     return True
-            except ValueError:
+            except ValueError as e:
+                log.error(e)
                 return False
         return False
 
     def run(self):
         while True:
             try:
-                log.debug("Trying to download image")
                 link = self.decryptedLinks_queue.get()
-                response = requests.get(link)
+                log.debug("Trying to download image %s" % link)
+
+                response = requests.get("http://" + link)
                 
                 # get file name
                 filename = link.split('/')[-1]
@@ -66,8 +68,8 @@ class wallpaperThread(threading.Thread):
 
                 self.decryptedLinks_queue.task_done()
                 
-            except:
-                log.debug("There was an error in the image")
+            except Exception as e:
+                log.debug("There was an error in the image %s" % e)
 
     def save_content(self, resp, filename):
             save = open(self.path + filename , 'wb')

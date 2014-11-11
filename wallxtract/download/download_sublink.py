@@ -9,7 +9,7 @@ from wallxtract.common.logger import LoggerTool
 log = LoggerTool().setupLogger(__name__, level=logging.DEBUG)
 
 
-class subLinkThread(threading.Thread):
+class SubLinkThread(threading.Thread):
     """Grab Sublinks"""
 
     def __init__(self, site_queue, sublink_queue):
@@ -27,8 +27,8 @@ class subLinkThread(threading.Thread):
     def run(self):
         while True:     
             try:
-                log.debug("Getting Site...")
                 site = self.site_queue.get()
+                log.debug("Getting Site... %s" % site)
                 r = requests.get(site)
                 match = re.findall ( self.pattern, r.text)
                 if match:

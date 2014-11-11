@@ -5,7 +5,7 @@ import requests
 import sys
 from termcolor import colored
 
-from .download.download_sublink import subLinkThread
+from .download.download_sublink import SubLinkThread
 from .download.download_img import wallpaperThread
 
 from wallxtract.parser.decrypt_sublink import decryptLinksThread
@@ -39,7 +39,7 @@ class RunProgram():
 
     def runThreads(self):
         for i in range(self.size):
-            sl = subLinkThread(self.site_queue, self.sublinks_queue)
+            sl = SubLinkThread(self.site_queue, self.sublinks_queue)
             dl = decryptLinksThread(self.sublinks_queue, self.decryptedLinks_queue)
             di = wallpaperThread(self.decryptedLinks_queue, self.log_queue, self.count_queue)
             logger = loggerThread(self.log_queue)
@@ -78,6 +78,13 @@ class RunProgram():
 
         r = requests.head(path)
         return r.status_code == requests.codes.ok
+
+    def single_img(self):
+        site = buildUrl()
+        if not self.exists(site):
+            logging.fatal("Unable to access the site, please check the url")
+            sys.exit(0)
+
 
     def single_page(self):
         site = buildUrl()

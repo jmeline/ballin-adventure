@@ -17,10 +17,10 @@ class loggerThread(threading.Thread):
     def run(self):
         while True:
             try:
-                logger.debug("Trying to Log")
                 print_colored_green = lambda x: cprint(x, 'green')
                 entry = self.log_queue.get()
-                log = open(self.logpath, 'a+' ) 
+                logger.debug("Trying to Log: %s" % entry)
+                log = open(self.logpath, 'a+' )
                 log.write(entry + "\n")
                 log.close()
                 print_colored_green("Logged: " + entry)

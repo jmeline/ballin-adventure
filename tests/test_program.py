@@ -1,8 +1,8 @@
 __author__ = 'jmeline'
 
 class TestProgram:
-    def setup:
+    def setup(self):
         pass
-    def teardown:
+    def teardown(self):
         pass
 

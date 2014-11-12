@@ -2,9 +2,8 @@ __author__ = 'jmeline'
 
 
 class TestwallXtractor:
-    def setup:
+    def setup(self):
         pass
-
-    def teardown:
+    def teardown(self):
         pass
         

@@ -14,6 +14,7 @@ class SubLinkThread(threading.Thread):
 
     def __init__(self, site_queue, sublink_queue):
         threading.Thread.__init__(self)
+        self.signal = True
         self.site_queue = site_queue
         self.sublink_queue = sublink_queue
         #self.wallsite = 'http://wallbase.cc/wallpaper/'
@@ -25,7 +26,7 @@ class SubLinkThread(threading.Thread):
         self.sub_pattern = r'<img src="(.*)" class="wall stage1 wide">'
 
     def run(self):
-        while True:     
+        while self.signal:
             try:
                 site = self.site_queue.get()
                 log.debug("Getting Site... %s" % site)
@@ -46,4 +47,8 @@ class SubLinkThread(threading.Thread):
             except:
                 print_colored_red = lambda x: cprint (x, 'red')
                 print_colored_red('Unable to connect to '+ site)
+
+
+    def onStop(self):
+        self.signal = False
        

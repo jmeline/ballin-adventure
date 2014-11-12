@@ -1,9 +1,8 @@
 __author__ = 'jmeline'
 
 class TestDownloadImg:
-    def setup:
+    def setup(self):
         pass
-
-    def teardown:
+    def teardown(self):
         pass
         

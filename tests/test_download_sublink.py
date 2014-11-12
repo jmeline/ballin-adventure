@@ -1,10 +1,44 @@
 __author__ = 'jmeline'
 
-from wallxtract.download.download_sublink import
+import threading
+from wallxtract.download.download_sublink import SubLinkThread
+from wallxtract.wallbase_config import buildUrl
+
+try:
+    import Queue
+except:
+    import queue as Queue
+
 
 class TestDownloadSublink:
-    def setup:
+    def setup(self):
+        self.site_queue = Queue.Queue()
+        self.sublinks_queue = Queue.Queue()
+        site = buildUrl()
+        assert site
+        self.site_queue.put(site)
+
+    def teardown(self):
         pass
-    def teardown:
-        pass
+
+    def test_sublinkThread(self):
+        assert self.site_queue
+        sl = SubLinkThread(self.site_queue, self.sublinks_queue)
+        sl.setDaemon(True)
+        sl.start()
+        #assert self.site_queue.qsize() == 0
+        assert sl.is_alive()
+        # Stop thread
+        sl.onStop()
+        # Wait until the thread stops
+        sl.join(1)
+
+        assert not sl.is_alive()
+        assert threading.active_count() == 1
+
+        #print (self.sublinks_queue.qsize())
+        #print ("Thread count: %s " % threading.active_count())
+
+
+
 

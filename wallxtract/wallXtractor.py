@@ -1,8 +1,14 @@
-import queue as Queue
+
 import time
 import logging
 import requests
 import sys
+
+try:
+    import Queue
+except:
+    import queue as Queue
+
 from termcolor import colored
 
 from .download.download_sublink import SubLinkThread

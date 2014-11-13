@@ -6,7 +6,8 @@ import sys
 
 try:
     import Queue
-except:
+except Exception as e:
+    print ("Problem! ", e)
     import queue as Queue
 
 from termcolor import colored
@@ -87,9 +88,33 @@ class RunProgram():
 
     def single_img(self):
         site = buildUrl()
+
         if not self.exists(site):
             logging.fatal("Unable to access the site, please check the url")
             sys.exit(0)
+        sl = SubLinkThread(self.site_queue, self.sublinks_queue)
+        dl = decryptLinksThread(self.sublinks_queue, self.decryptedLinks_queue)
+
+        sl.setDaemon(True)
+        dl.setDaemon(True)
+
+        sl.start()
+        dl.start()
+
+        self.site_queue.put(site)
+
+        self.site_queue.join()
+        self.sublinks_queue.join()
+
+        urls = []
+
+        while not self.decryptedLinks_queue.empty():
+            item = self.decryptedLinks_queue.get()
+            print (item)
+            urls.append(item)
+            self.decryptedLinks_queue.task_done()
+
+        self.decryptedLinks_queue.join()
 
 
     def single_page(self):

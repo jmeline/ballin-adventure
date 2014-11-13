@@ -31,9 +31,9 @@ class TestDownloadSublink:
         # Stop thread
         sl.onStop()
         # Wait until the thread stops
-        sl.join(1)
-
-        assert not sl.is_alive()
+        sl.join()
+        if sl.is_alive():
+            sl.join(1)
         assert threading.active_count() == 1
 
         #print (self.sublinks_queue.qsize())

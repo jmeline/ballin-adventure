@@ -17,8 +17,9 @@ log= LoggerTool().setupLogger(__name__, level=logging.DEBUG)
 def main():
     try:
         wallbaseExtractor = wallxtract.RunProgram()
-        wallbaseExtractor.single_page()
+        #wallbaseExtractor.single_page()
         #wallbaseExtractor.multi_page()
+        wallbaseExtractor.single_img()
 
     except KeyboardInterrupt:
        logging.debug("Exiting program!")

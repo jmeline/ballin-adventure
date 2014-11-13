@@ -1,27 +1,22 @@
 import re
 import sys
-import threading
 import requests
 import logging
 from termcolor import cprint
+from wallxtract.common.baseThread import BaseThread
 
 from wallxtract.common.logger import LoggerTool
 log = LoggerTool().setupLogger(__name__, level=logging.DEBUG)
 
 
-class SubLinkThread(threading.Thread):
+class SubLinkThread(BaseThread):
     """Grab Sublinks"""
 
     def __init__(self, site_queue, sublink_queue):
-        threading.Thread.__init__(self)
-        self.signal = True
+        BaseThread.__init__(self)
         self.site_queue = site_queue
         self.sublink_queue = sublink_queue
-        #self.wallsite = 'http://wallbase.cc/wallpaper/'
-        #self.pattern = r'http://wallbase.cc/wallpaper/(\d*)'
-
         self.wallsite = 'http://alpha.wallhaven.cc/wallpaper/'
-        #self.pattern = r'http://alpha.wallhaven.cc/wallpaper/(\d*)'
         self.pattern = r'<a class="preview" href="http://alpha.wallhaven.cc/wallpaper/(\d*)"'
         self.sub_pattern = r'<img src="(.*)" class="wall stage1 wide">'
 
@@ -36,19 +31,7 @@ class SubLinkThread(threading.Thread):
                     for m in match:
                         link = self.wallsite + m
                         self.sublink_queue.put( link )
-                        #r = requests.get(link)
-                        #sub_match = re.search(self.sub_pattern, r.text)
-                        #if sub_match:
-                        #    print_colored_yellow = lambda x: cprint(x, 'yellow')
-                        #    print_colored_yellow("Extracted Link: " + sub_match.group(1))
-                        #    self.sublink_queue.put( sub_match.group(1) )
-
                 self.site_queue.task_done()
             except:
                 print_colored_red = lambda x: cprint (x, 'red')
                 print_colored_red('Unable to connect to '+ site)
-
-
-    def onStop(self):
-        self.signal = False
-       

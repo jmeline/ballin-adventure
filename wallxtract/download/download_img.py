@@ -1,24 +1,24 @@
 import os
 import re
-import threading
 import requests
 import logging
 from wallxtract.path_config import returnPath
 from wallxtract.path_config import returnLogPath
 from wallxtract.wallbase_config import returnFileLayout
+from wallxtract.common.baseThread import BaseThread
+from wallxtract.common.logger import LoggerTool
 from termcolor import colored
 
-from wallxtract.common.logger import LoggerTool
 log = LoggerTool().setupLogger(__name__, level=logging.DEBUG)
 
-class wallpaperThread(threading.Thread):
+class wallpaperThread(BaseThread):
     """
     Download Wallpaper
 
     """
 
     def __init__(self, decryptedLinks_queue, log_queue, count_queue):
-        threading.Thread.__init__(self)
+        BaseThread.__init__(self)
         self.decryptedLinks_queue = decryptedLinks_queue
         self.log_queue = log_queue
         self.count_queue = count_queue
@@ -47,7 +47,7 @@ class wallpaperThread(threading.Thread):
         return False
 
     def run(self):
-        while True:
+        while self.signal:
             try:
                 link = self.decryptedLinks_queue.get()
                 log.debug("Trying to download image %s" % link)

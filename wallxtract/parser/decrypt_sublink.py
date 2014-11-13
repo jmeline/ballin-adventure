@@ -1,24 +1,23 @@
 import re
-import threading
 import requests
 import logging
 from termcolor import cprint
+from wallxtract.common.baseThread import BaseThread
 
 from wallxtract.common.logger import LoggerTool
 log = LoggerTool().setupLogger(__name__, level=logging.DEBUG)
 
-class decryptLinksThread(threading.Thread):
+class decryptLinksThread(BaseThread):
     """decrypt links"""
 
     def __init__(self, in_queue, out_queue):
-        threading.Thread.__init__(self)
+        BaseThread.__init__(self)
         self.in_queue = in_queue
         self.out_queue = out_queue
-        #self.pattern = r'<img src="(.*)" class="wall stage1 wide">'
         self.pattern = r'\s*<img id="wallpaper"\s*src="//(.*)"'
 
     def run(self):
-        while True:
+        while self.signal:
             try:
                 link = self.in_queue.get()
                 log.debug("Getting Sublink... %s" % link)

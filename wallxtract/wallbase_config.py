@@ -11,22 +11,7 @@ purity = '100'
 thmpp = '60'
 sort = '1d'
 
-{
-    "Configuration": {
-        "Site": "http: //alpha.wallhaven.cc/wallpaper/search?categories=111&purity=100&sorting=random&order=desc&page=1",
-        "Category": "toplist",
-        "Board": "213",
-        "Res_opt": "eqeq",
-        "Resolution": "0x0",
-        "Aspect": "0",
-        "Purity": "100",
-        "Thmpp": "60",
-        "Sort": "1d"
-    },
 
-    "Wallpaper_Path": ".",
-
-}
 fileLayout = [category, sort, purity]
 # # http://alpha.wallhaven.cc/wallpaper/search?categories=111&purity=100&sorting=random&order=desc
 ## http://alpha.wallhaven.cc/wallpaper/search?categories=111&purity=100&sorting=random&order=desc&page=6

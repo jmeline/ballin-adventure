@@ -1,7 +1,8 @@
 __author__ = 'jmeline'
 
 import threading
-from wallxtract.download.download_sublink import SubLinkThread
+
+from logic.download_sublink import SubLinkThread
 from wallxtract.wallbase_config import buildUrl
 
 try:

@@ -1,10 +1,13 @@
 import re
-import requests
 import logging
+
+import requests
 from termcolor import cprint
 from wallxtract.common.baseThread import BaseThread
 
+from logic.baseThread import BaseThread
 from wallxtract.common.logger import LoggerTool
+
 log = LoggerTool().setupLogger(__name__, level=logging.DEBUG)
 
 class decryptLinksThread(BaseThread):

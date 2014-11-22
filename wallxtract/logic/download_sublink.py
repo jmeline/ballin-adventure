@@ -2,10 +2,14 @@ import re
 import sys
 import requests
 import logging
+
+import requests
 from termcolor import cprint
 from wallxtract.common.baseThread import BaseThread
 
+from logic.baseThread import BaseThread
 from wallxtract.common.logger import LoggerTool
+
 log = LoggerTool().setupLogger(__name__, level=logging.DEBUG)
 
 
@@ -35,3 +39,4 @@ class SubLinkThread(BaseThread):
             except:
                 print_colored_red = lambda x: cprint (x, 'red')
                 print_colored_red('Unable to connect to '+ site)
+                self.site_queue.task_done()

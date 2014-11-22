@@ -1,38 +1,35 @@
-
 import time
 import logging
-import requests
 import sys
 
+import requests
+
 try:
-    import Queue
-except Exception as e:
-    print ("Problem! ", e)
+    # Python3 compatability
     import queue as Queue
+except Exception as e:
+    # Python2 compatability
+    import Queue
 
 from termcolor import colored
-
-from .download.download_sublink import SubLinkThread
-from .download.download_img import wallpaperThread
-
-from wallxtract.parser.decrypt_sublink import decryptLinksThread
-
-from .log.logger import loggerThread
-from .counter.counter import CounterThread
+from .logic.download_sublink import SubLinkThread
+from .logic.download_img import wallpaperThread
+from .logic.decrypt_sublink import decryptLinksThread
+from .logic.logger import loggerThread
+from .logic.counter import CounterThread
 
 from wallxtract.wallbase_config import buildUrl
 from wallxtract.wallbase_config import updateUrl
 from wallxtract.wallbase_config import returnThmpp
 
-
 from wallxtract.common.logger import LoggerTool
 logging = LoggerTool().setupLogger(__name__, level=logging.DEBUG)
 
-class RunProgram():
+class Initiate():
     """
 
     """
-    def __init__(self):
+    def __init__(self, config):
         self.size = 1
 
         self.site_queue = Queue.Queue()
@@ -43,6 +40,8 @@ class RunProgram():
         
         self.added_imgs = 0
         self.skipped_imgs = 0
+
+        self.config = config
 
     def runThreads(self):
         for i in range(self.size):
@@ -83,8 +82,12 @@ class RunProgram():
 
     def exists(self, path):
 
-        r = requests.head(path)
-        return r.status_code == requests.codes.ok
+        try:
+            r = requests.head(path)
+            return r.status_code == requests.codes.ok
+        except requests.exceptions.ConnectionError as e:
+            print ("Please check your internet connection, unable to retrieve site: %s", e.message)
+            return None
 
     def single_img(self):
         site = buildUrl()
@@ -122,7 +125,6 @@ class RunProgram():
         if not self.exists(site):
             logging.fatal("Unable to access the site, please check the url")
             sys.exit(0)
-
 
         start = time.time()
         self.site_queue.put(site)        

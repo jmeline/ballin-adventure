@@ -8,16 +8,16 @@ import os
 #path = os.path.expanduser('~/mystuff/Python/PythonPractice/WallXtract/')
 #path = os.path.join('.', 'WallXtract')
 #sys.path.append(path)
-from common import JsonConfigHandler as jch
 
 import wallxtract.wallXtractor as wallxtract
 import logging
+from common import configManager as cm
 from wallxtract.common.logger import LoggerTool
 log= LoggerTool().setupLogger(__name__, level=logging.DEBUG)
 
 def main():
     try:
-        config = jch.JsonConfigHandler()
+        config = cm.ConfigManager()
         wallbaseExtractor = wallxtract.Initiate(config)
         #wallbaseExtractor.single_page()
         #wallbaseExtractor.multi_page()

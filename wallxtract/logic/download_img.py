@@ -1,9 +1,6 @@
 import os
-<<<<<<< HEAD:wallxtract/download/download_img.py
 import re
 import requests
-=======
->>>>>>> Restructing code and adding json support for the configuration:wallxtract/logic/download_img.py
 import logging
 
 import requests
@@ -12,8 +9,6 @@ from termcolor import colored
 from wallxtract.path_config import returnPath
 from wallxtract.path_config import returnLogPath
 from wallxtract.wallbase_config import returnFileLayout
-<<<<<<< HEAD:wallxtract/download/download_img.py
-from wallxtract.common.baseThread import BaseThread
 from wallxtract.common.logger import LoggerTool
 from termcolor import colored
 from logic.baseThread import BaseThread

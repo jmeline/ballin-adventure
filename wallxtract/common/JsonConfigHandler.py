@@ -20,13 +20,12 @@ class JsonConfigHandler():
             print ("Error, no Configuration was found")
 
         self.data = json.load(f)
-        self.extractedObject = namedtuple('Config', self.data)(**self.data)
 
-    def wallhaven_URL(self):
-        """ Create URL
-        :return:
-        """
+        self.extractedObject = {
+            "wallhaven": namedtuple('Config', self.data)(**self.data)
+        }
 
-        url = "http://alpha.wallhaven.cc/wallpaper/search?categories=111&purity=100&sorting=random&order=desc&page=1",
 
-        return url
+
+
+

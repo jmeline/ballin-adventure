@@ -1,13 +1,12 @@
 {
-    "Configuration": {
-        "Category": "toplist",
-        "Board": "213",
-        "Res_opt": "eqeq",
-        "Resolution": "0x0",
-        "Aspect": "0",
+    "Wallhaven": {
+        "Categories": "111",
         "Purity": "100",
-        "Thmpp": "60",
-        "Sort": "1d"
+        "Resolution": "1920x1080",
+        "Ratio": "eqeq",
+        "Sorting": "favorites",
+        "Order": "desc",
+        "Page": [1,2,3,4,5]
     },
     "Wallpaper_Path": "."
 }

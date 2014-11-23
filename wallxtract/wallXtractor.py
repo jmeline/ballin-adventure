@@ -90,7 +90,8 @@ class Initiate():
             return None
 
     def single_img(self):
-        site = buildUrl()
+        site = self.config.wallhaven_URL()
+        #site = buildUrl()
 
         if not self.exists(site):
             logging.fatal("Unable to access the site, please check the url")

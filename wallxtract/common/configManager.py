@@ -1,10 +1,10 @@
 __author__ = 'jmeline'
 
-from common import JsonConfigHandler as jch
+from .JsonConfigHandler import JsonConfigHandler
 
 class ConfigManager():
     def __init__(self):
-        self.jsonConfig = jch.JsonConfigHandler()
+        self.jsonConfig = JsonConfigHandler()
         self.wallhaven_generator = self._page_generator()
 
 

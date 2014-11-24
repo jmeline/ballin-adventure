@@ -11,7 +11,7 @@ from wallxtract.path_config import returnLogPath
 from wallxtract.wallbase_config import returnFileLayout
 from wallxtract.common.logger import LoggerTool
 from termcolor import colored
-from logic.baseThread import BaseThread
+from .baseThread import BaseThread
 from wallxtract.common.logger import LoggerTool
 
 log = LoggerTool().setupLogger(__name__, level=logging.DEBUG)

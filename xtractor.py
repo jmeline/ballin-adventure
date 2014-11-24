@@ -11,7 +11,7 @@ import os
 
 import wallxtract.wallXtractor as wallxtract
 import logging
-from common import configManager as cm
+from wallxtract.common import configManager as cm
 from wallxtract.common.logger import LoggerTool
 log= LoggerTool().setupLogger(__name__, level=logging.DEBUG)
 

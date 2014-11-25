@@ -13,9 +13,9 @@ except Exception as e:
 
 from termcolor import colored
 from .logic.download_sublink import SubLinkThread
-from .logic.download_img import wallpaperThread
-from .logic.decrypt_sublink import decryptLinksThread
-from .logic.logger import loggerThread
+from .logic.download_img import WallpaperThread
+from .logic.decrypt_sublink import DecryptLinksThread
+from .logic.logger import LoggerThread
 from .logic.counter import CounterThread
 
 from wallxtract.wallbase_config import buildUrl
@@ -46,9 +46,9 @@ class Initiate():
     def runThreads(self):
         for i in range(self.size):
             sl = SubLinkThread(self.site_queue, self.sublinks_queue)
-            dl = decryptLinksThread(self.sublinks_queue, self.decryptedLinks_queue)
-            di = wallpaperThread(self.decryptedLinks_queue, self.log_queue, self.count_queue)
-            logger = loggerThread(self.log_queue)
+            dl = DecryptLinksThread(self.sublinks_queue, self.decryptedLinks_queue)
+            di = WallpaperThread(self.decryptedLinks_queue, self.log_queue, self.count_queue)
+            logger = LoggerThread(self.log_queue)
 
             sl.setDaemon(True)
             dl.setDaemon(True)
@@ -78,7 +78,14 @@ class Initiate():
         self.count_queue.join()
         logging.debug("count_queue joined")
 
+
         self.added_imgs, self.skipped_imgs = self.getCount(countList)
+        '''
+        while not self.decryptedLinks_queue.empty():
+            item = self.decryptedLinks_queue.get()
+            print (item)
+            self.decryptedLinks_queue.task_done()
+        '''
 
     def exists(self, path):
 
@@ -91,13 +98,12 @@ class Initiate():
 
     def single_img(self):
         site = self.config.wallhaven_URL()
-        #site = buildUrl()
 
         if not self.exists(site):
             logging.fatal("Unable to access the site, please check the url")
             sys.exit(0)
         sl = SubLinkThread(self.site_queue, self.sublinks_queue)
-        dl = decryptLinksThread(self.sublinks_queue, self.decryptedLinks_queue)
+        dl = DecryptLinksThread(self.sublinks_queue, self.decryptedLinks_queue)
 
         sl.setDaemon(True)
         dl.setDaemon(True)
@@ -120,7 +126,6 @@ class Initiate():
 
         self.decryptedLinks_queue.join()
 
-
     def single_page(self):
         site = buildUrl()
         if not self.exists(site):
@@ -134,13 +139,12 @@ class Initiate():
 
         self.printResults(end)
 
-    def multi_page(self): 
-        pageNum = 0
-        thmpp = returnThmpp()
-        for i in range(1, 16):
-            pageNum += int(thmpp)
-            newsite = updateUrl(pageNum)
-            self.site_queue.put(newsite)
+    def multi_page(self):
+
+        site = self.config.wallhaven_URL()
+        while site:
+            self.site_queue.put(site)
+            site = self.config.wallhaven_URL()
 
         start = time.time()
         self.runThreads()

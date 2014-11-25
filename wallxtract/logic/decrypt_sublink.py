@@ -10,7 +10,7 @@ from wallxtract.common.logger import LoggerTool
 
 log = LoggerTool().setupLogger(__name__, level=logging.DEBUG)
 
-class decryptLinksThread(BaseThread):
+class DecryptLinksThread(BaseThread):
     """decrypt links"""
 
     def __init__(self, in_queue, out_queue):

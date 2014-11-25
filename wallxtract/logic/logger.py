@@ -6,7 +6,7 @@ import logging
 from wallxtract.common.logger import LoggerTool
 logger = LoggerTool().setupLogger(__name__, level=logging.DEBUG)
 
-class loggerThread(threading.Thread):
+class LoggerThread(threading.Thread):
     """Log the downloaded Wallpaper"""
 
     def __init__(self, log_queue):

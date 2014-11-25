@@ -16,7 +16,7 @@ from wallxtract.common.logger import LoggerTool
 
 log = LoggerTool().setupLogger(__name__, level=logging.DEBUG)
 
-class wallpaperThread(BaseThread):
+class WallpaperThread(BaseThread):
     """
     Download Wallpaper
 

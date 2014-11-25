@@ -20,8 +20,8 @@ def main():
         config = cm.ConfigManager()
         wallbaseExtractor = wallxtract.Initiate(config)
         #wallbaseExtractor.single_page()
-        #wallbaseExtractor.multi_page()
-        wallbaseExtractor.single_img()
+        wallbaseExtractor.multi_page()
+        #wallbaseExtractor.single_img()
 
     except KeyboardInterrupt:
        logging.debug("Exiting program!")

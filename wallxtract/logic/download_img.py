@@ -62,6 +62,10 @@ class WallpaperThread(BaseThread):
                 # get file name
                 filename = link.split('/')[-1]
 
+                # obtain id
+                match = re.search('-(\d*).png', filename)
+                image_id = match.group(1)
+
                 # check duplicates
                 if not self.isDuplicate(filename):
                     self.printMsg(link, filename)

@@ -19,8 +19,8 @@ def main():
     try:
         config = cm.ConfigManager()
         wallbaseExtractor = wallxtract.Initiate(config)
-        #wallbaseExtractor.single_page()
-        wallbaseExtractor.multi_page()
+        wallbaseExtractor.single_page()
+        # wallbaseExtractor.multi_page()
         #wallbaseExtractor.single_img()
 
     except KeyboardInterrupt:

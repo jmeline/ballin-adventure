@@ -29,12 +29,12 @@ class WallpaperThread(BaseThread):
         self.count_queue = count_queue
         self.fileLayout = returnFileLayout()
         self.logpath = returnLogPath()
-        self.absolutePath = returnPath() 
-        
+        self.absolutePath = returnPath()
+
         self.path = self.absolutePath      \
                 + self.fileLayout[0] + "/" \
                 + self.fileLayout[1] + "/" \
-                + self.fileLayout[2] + "/" 
+                + self.fileLayout[2] + "/"
 
         if not os.path.exists(self.path):
             os.makedirs(self.path)
@@ -57,8 +57,9 @@ class WallpaperThread(BaseThread):
                 link = self.decryptedLinks_queue.get()
                 log.debug("Trying to download image %s" % link)
 
+                log.info("link: %s" % (type(link)))
                 response = requests.get("http://" + link)
-                
+
                 # get file name
                 filename = link.split('/')[-1]
 
@@ -76,7 +77,7 @@ class WallpaperThread(BaseThread):
                     self.count_queue.put(0)
 
                 self.decryptedLinks_queue.task_done()
-                
+
             except Exception as e:
                 log.debug("There was an error in the image %s" % e)
 
@@ -89,4 +90,4 @@ class WallpaperThread(BaseThread):
             print_colored_cyan = lambda x: colored(x, 'cyan')
             print_colored_magenta = lambda x: colored(x, 'magenta')
             print_colored_cyan("Downloading: " + link), "\n\t->", print_colored_magenta(self.path + filename) + "\n"
-  
+

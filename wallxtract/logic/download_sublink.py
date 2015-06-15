@@ -12,7 +12,7 @@ from .baseThread import BaseThread
 
 log = LoggerTool().setupLogger(__name__, level=logging.DEBUG)
 
-
+# TODO change to xpath searching instead of Regex
 class SubLinkThread(BaseThread):
     """Grab Sublinks"""
 

@@ -19,6 +19,7 @@ class LoggerTool():
         streamHandler = logging.StreamHandler()
         streamHandler.setFormatter(formatter)
         l.setLevel(level)
+        l.setLevel(logging.FATAL)
         l.addHandler(streamHandler)
         return l
 

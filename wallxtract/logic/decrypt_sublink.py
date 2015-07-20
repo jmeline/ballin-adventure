@@ -68,8 +68,7 @@ class DecryptLinksThread(BaseThread):
 
         return {
             "Purity": purity[0],
-            "html": HTML[0],
-            # "html": "http:" + HTML[0],
+            "html": "http:" + HTML[0],
             "Resolution": resolution[0],
             "Tags": tags,
             "Size": size[0],

@@ -61,17 +61,22 @@ class DecryptLinksThread(BaseThread):
 #            source = source[0].rstrip()
 #        except:
 #            source = source.rstrip()
-#
+        try:
+            tmp = favorites[0]
+        except Exception as e:
+            favorites = None
+
         return {
             "Purity": purity[0],
             "html": HTML[0],
+            # "html": "http:" + HTML[0],
             "Resolution": resolution[0],
             "Tags": tags,
             "Size": size[0],
             "Category": category[0],
             "Views": views[0],
-            "Favorites": favorites[0],
-            "Uploaded_by": (uploaded_by[0], uploaded_by_link[0]),
+            "Favorites": favorites,
+            # "Uploaded_by": (uploaded_by[0], uploaded_by_link[0]),
             "Added": (added[0], added_datetime),
             #"Source": source
         }

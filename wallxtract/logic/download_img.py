@@ -55,20 +55,21 @@ class WallpaperThread(BaseThread):
         while self.signal:
             try:
                 link = self.decryptedLinks_queue.get()
-                log.debug("Trying to download image %s" % link['html'])
+                link = "http:" + link['html']
+                log.debug("Trying to download image %s" % link)
 
-                response = requests.get("http:" + link['html'])
+                response = requests.get(link)
 
                 # get file name
-                filename = link['html'].split('/')[-1]
+                filename = link.split('/')[-1]
 
                 # obtain id
-                match = re.search('-(\d*).png', filename)
-                image_id = match.group(1)
+                # match = re.search('-(\d*).png', filename)
+                # image_id = match.group(1)
 
                 # check duplicates
                 if not self.isDuplicate(filename):
-                    self.printMsg(link['html'], filename)
+                    self.printMsg(link, filename)
                     self.save_content(response, filename)
                     self.log_queue.put(filename)
                     self.count_queue.put(1)
@@ -88,5 +89,5 @@ class WallpaperThread(BaseThread):
     def printMsg(self, link, filename):
             print_colored_cyan = lambda x: colored(x, 'cyan')
             print_colored_magenta = lambda x: colored(x, 'magenta')
-            print_colored_cyan("Downloading: " + link['html']), "\n\t->", print_colored_magenta(self.path + filename) + "\n"
+            print_colored_cyan("Downloading: " + link), "\n\t->", print_colored_magenta(self.path + filename) + "\n"
 

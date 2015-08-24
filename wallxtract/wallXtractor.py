@@ -69,6 +69,7 @@ class Initiate():
             c.start()
 
         # Allows program to be responsive. Able to use Ctrl-C to exit the program
+        # http://stackoverflow.com/questions/1635080/terminate-a-multi-thread-python-program
         while threading.active_count() >0:
             time.sleep(0.1)
 

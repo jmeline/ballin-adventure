@@ -1,7 +1,7 @@
 import re
 import logging
 import requests
-from termcolor import cprint
+from wallxtract.common.termcolor import cprint
 from wallxtract.common.baseThread import BaseThread
 from lxml import html
 from .baseThread import BaseThread
@@ -66,8 +66,13 @@ class DecryptLinksThread(BaseThread):
         except Exception as e:
             favorites = None
 
+        try:
+            tmp = purity[0]
+        except Exception as e:
+            purity = None
+
         return {
-            "Purity": purity[0],
+            "Purity": purity,
             "html": "http:" + HTML[0],
             "Resolution": resolution[0],
             "Tags": tags,

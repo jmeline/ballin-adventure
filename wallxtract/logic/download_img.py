@@ -4,13 +4,11 @@ import requests
 import logging
 
 import requests
-from termcolor import colored, cprint
-
+from wallxtract.common.termcolor import colored, cprint
 from wallxtract.path_config import returnPath
 from wallxtract.path_config import returnLogPath
 from wallxtract.wallbase_config import returnFileLayout
 from wallxtract.common.logger import LoggerTool
-from termcolor import colored
 from .baseThread import BaseThread
 from wallxtract.common.logger import LoggerTool
 

@@ -6,12 +6,15 @@ class ConfigManager():
     def __init__(self):
         self.jsonConfig = JsonConfigHandler()
         self.wallhaven_generator = self._page_generator()
-
+        self.pageNumber = 500
 
     def _page_generator(self):
-        pages = self.jsonConfig.extractedObject['wallhaven'].Wallhaven['Page']
-        for i in pages:
-            yield i
+        # pages = self.jsonConfig.extractedObject['wallhaven'].Wallhaven['Page']
+        # for i in pages:
+            # yield i
+        while(self.pageNumber < 1000):
+            yield self.pageNumber
+            self.pageNumber += 1
 
     def wallhaven_URL(self):
         """ Create URL

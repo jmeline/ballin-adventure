@@ -11,7 +11,7 @@ except Exception as e:
     # Python2 compatability
     import Queue
 
-from termcolor import colored
+from common.termcolor import colored
 from .logic.download_sublink import SubLinkThread
 from .logic.download_img import WallpaperThread
 from .logic.decrypt_sublink import DecryptLinksThread
@@ -21,7 +21,8 @@ from .logic.counter import CounterThread
 from wallxtract.wallbase_config import buildUrl
 from wallxtract.wallbase_config import updateUrl
 from wallxtract.wallbase_config import returnThmpp
-
+import threading
+import time
 from wallxtract.common.logger import LoggerTool
 logging = LoggerTool().setupLogger(__name__, level=logging.DEBUG)
 
@@ -37,7 +38,7 @@ class Initiate():
         self.decryptedLinks_queue = Queue.Queue()
         self.log_queue = Queue.Queue()
         self.count_queue = Queue.Queue()
-        
+
         self.added_imgs = 0
         self.skipped_imgs = 0
 
@@ -61,23 +62,28 @@ class Initiate():
             logger.start()
 
         countList = [CounterThread(self.count_queue) for x in range(self.size)]
-        
+
         logging.debug("Begin counting")
         for c in countList:
             c.setDaemon(True)
             c.start()
 
-        self.site_queue.join()
-        logging.debug("Site_queue joined")
-        self.sublinks_queue.join()
-        logging.debug("Sublinks_queue joined")
-        self.decryptedLinks_queue.join()
-        logging.debug("decryptedLinks_queue joined")
-        self.log_queue.join()
-        logging.debug("log_queue joined")
-        self.count_queue.join()
-        logging.debug("count_queue joined")
+        # Allows program to be responsive. Able to use Ctrl-C to exit the program
+        while threading.active_count() >0:
+            time.sleep(0.1)
 
+        # Prevents the program from being responsive. Unable to use Ctrl-C to exit the program
+        # self.site_queue.join()
+        # logging.debug("Site_queue joined")
+        # self.sublinks_queue.join()
+        # logging.debug("Sublinks_queue joined")
+        # self.decryptedLinks_queue.join()
+        # logging.debug("decryptedLinks_queue joined")
+        # self.log_queue.join()
+        # logging.debug("log_queue joined")
+        # self.count_queue.join()
+        # logging.debug("count_queue joined")
+        #
 
         self.added_imgs, self.skipped_imgs = self.getCount(countList)
         '''
@@ -113,8 +119,11 @@ class Initiate():
 
         self.site_queue.put(site)
 
-        self.site_queue.join()
-        self.sublinks_queue.join()
+        while threading.active_count() >0:
+            time.sleep(0.1)
+
+        # self.site_queue.join()
+        # self.sublinks_queue.join()
 
         urls = []
 
@@ -124,7 +133,7 @@ class Initiate():
             urls.append(item)
             self.decryptedLinks_queue.task_done()
 
-        self.decryptedLinks_queue.join()
+        # self.decryptedLinks_queue.join()
 
     def single_page(self):
         site = buildUrl()
@@ -133,7 +142,7 @@ class Initiate():
             sys.exit(0)
 
         start = time.time()
-        self.site_queue.put(site)        
+        self.site_queue.put(site)
         self.runThreads()
         end = time.time() - start
 
@@ -141,8 +150,10 @@ class Initiate():
 
     def multi_page(self):
 
+        print_colored_red = lambda x: colored(x, 'red')
         site = self.config.wallhaven_URL()
         while site:
+            print_colored_red("Looking at page: %s" % site)
             self.site_queue.put(site)
             site = self.config.wallhaven_URL()
 

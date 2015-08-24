@@ -1,6 +1,6 @@
 import threading
 from wallxtract.path_config import returnLogPath
-from termcolor import cprint
+from wallxtract.common.termcolor import cprint
 
 import logging
 from wallxtract.common.logger import LoggerTool

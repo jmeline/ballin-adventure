@@ -4,9 +4,8 @@ import requests
 import logging
 
 import requests
-from termcolor import cprint
+from wallxtract.common.termcolor import cprint
 from wallxtract.common.baseThread import BaseThread
-
 from wallxtract.common.logger import LoggerTool
 from .baseThread import BaseThread
 

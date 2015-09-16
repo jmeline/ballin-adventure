@@ -10,8 +10,8 @@ ballin-adventure
 Installation
 ============
 Required packages
-    * lxml
-    * requests
+   * lxml
+   * requests
 
 Installation using Conda
 ========================
@@ -24,6 +24,5 @@ On Windows
 $ conda create -n xtractor python=2.7 requests lxml pip
 $ activate xtractor
 $ python xtractor.py
-
 
 
